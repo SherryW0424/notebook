@@ -25,3 +25,10 @@ RNN专门用于处理时序信息（sequential information）。在传统的神�
 RNN在许多NLP任务中都获得了极大的成功。这里我应该提到最常使用的RNN类型为LSTM，LSTM在获取长期依赖关系比RNN好很多。不要担心，LSTM和我们在这个tutorial开发的RNN大部分一样，它们只是计算隐藏状态的方式不同。我们将在后面介绍更多关于LSTM的细节。以下是RNN在NLP中的例子应用（非穷举清单）。
 
 <b>语言模型和生成文本</b>
+
+给出一个单词序列，我们根据前面的单词预测（后面）每个单词的概率。语言模型允许我们测量一个句子可能出现的概率，这对于机器翻译而言是一个很重要的输入（因为概率高的句子通常是正确的）。能够预测下一个单词的side-effect是我们得到了一个生成模型，这允许我们通过输出概率生成新的文本。根据我们不同的训练数据，我们可以生成各种stuff。在语言模型中，输出通常是单词序列（例如用one-hot编码），且输出为预测的单词序列。当训练网络时，我们设置<img src="https://latex.codecogs.com/svg.latex?o_t = x_{t+1}" title="o_t = x_{t+1}" />，因为我们希望时刻t的输出为真实的下一个单词。
+
+关于语言模型与生成文本的文章：
+- <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Recurrent%20neural%20network%20based%20language%20model.pdf">Recurrent neural network based language model</a>
+- <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Extensions%20of%20Recurrent%20neural%20network%20based%20language%20model.pdf">Extensions of Recurrent neural network based language model</a>
+- <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Generating%20Text%20with%20Recurrent%20Neural%20Networks.pdf">Generating Text with Recurrent Neural Networks</a>
