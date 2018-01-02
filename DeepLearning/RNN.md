@@ -32,3 +32,34 @@ RNN在许多NLP任务中都获得了极大的成功。这里我应该提到最�
 - <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Recurrent%20neural%20network%20based%20language%20model.pdf">Recurrent neural network based language model</a>
 - <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Extensions%20of%20Recurrent%20neural%20network%20based%20language%20model.pdf">Extensions of Recurrent neural network based language model</a>
 - <a href="https://github.com/SherryW0424/notebook/blob/master/DeepLearning/Generating%20Text%20with%20Recurrent%20Neural%20Networks.pdf">Generating Text with Recurrent Neural Networks</a>
+
+<b>机器翻译</b>
+机器翻译与语言模型类似，输出是输入语言的一个单词序列。我们想要以目标语言输出单词序列。一个关键区别为在输入全部输入单词之后，才开始输出，因为第一个翻译句子中的第一个单词可能需要获取完整输入句子的信息。
+
+<b>语音识别</b>
+
+略
+
+<b>生成图片描述</b>
+
+略
+
+### 训练RNN
+训练RNN与训练传统的神经网络类似。我们也使用反向传播算法，不过会有一点儿变化。因为在网络中各个步骤的参数是共享的，每个输出的梯度不仅需要计算当前时刻的步骤，还需要前面的步骤。例如，为了计算梯度<img src="https://latex.codecogs.com/svg.latex?t=4" title="t=4" />，我们需反向计算3步并将梯度求和。这成为Backpropagation Through Time(BPTT)。由于梯度消失/爆炸，使用BRTT训练的vanilla RNN难以学习长期的依赖。解决这些问题的方法是存在的，并且某些RNN（像LSTM）正是为解决这个问题设计的。
+
+### RNN扩展
+多年来，为了解决vanilla RNN模型的shortcoming，研究人员develop许多更复杂类型的RNN。我们将在后面的post里详细介绍，这节将做一个简要介绍，这样方便你熟悉模型的分类。
+
+时刻t的输出可能不仅仅依赖于序列前面的元素，还有可能依赖后面的元素，<b>Bidirectional RNNs</b>正是基于这个思路。例如，预测序列中间缺失的单词，需要两侧上下文的信息。Bidirectional RNNs很简单。它只是两个RNN
+stacked on top of each other. 输出将基于两个RNN的隐藏状态计算。
+
+![Bi-RNN原理图片](/DeepLearning/bidirectional-rnn.png)
+
+<b>Deep (Bidirectional) RNNs</b>与BiRNN类似，只是每个时刻多了几层。实际上这使得网络的计算能力更高（但我们也需要更多的训练数据）。
+
+![Deep Bi-RNN原理图片](/DeepLearning/deepbiRNN.png)
+
+<b>LSTM 网络</b>最近很受欢迎，并且刚才我们已经简要的介绍过。LSTM在基础结构上与RNN没什么区别，只是使用了不同的函数去计算隐藏状态。LSTM的记忆被称为cells，你可以把它当做前一个状态<img src="https://latex.codecogs.com/svg.latex?h_{t-1}" title="h_{t-1}" />与输入<img src="https://latex.codecogs.com/svg.latex?x_t" title="x_t" />的黑盒。这些cells决定在记忆里留下什么（丢弃什么）。然后它们将之前的状态，当前的记忆与输入结合。这些类型的单元对获取长期记忆十分有效。刚开始LSTM可能十分混乱，但如果你对它感兴趣，<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">这篇post是个很好的解释</a>。
+
+### 总结
+希望你对RBB有一个基本的了解，知道它们能干什么。在接下来的poat中我们将使用Python与Theano实现第一版RNN。
